@@ -55,13 +55,13 @@ export default function PrintCard({ item, base }: PrintCardProps) {
             (e.currentTarget as HTMLDivElement).style.transform = '';
           }}
         >
-          {/* Thumbnail — real photo for animals/fruits/vegs, SVG for others */}
+          {/* Thumbnail — coloring-book icon for animals/fruits/vegs, SVG for others */}
           <div
             style={{
               position: 'relative',
               height: 152,
               overflow: 'hidden',
-              background: showPhoto ? '#f0f0f0' : '#fafafa',
+              background: showPhoto ? 'white' : '#fafafa',
               borderBottom: '1.5px solid #f3f4f6',
               display: 'flex',
               alignItems: 'center',
@@ -76,31 +76,14 @@ export default function PrintCard({ item, base }: PrintCardProps) {
                   loading="lazy"
                   onError={() => setImgError(true)}
                   style={{
-                    width: '100%',
-                    height: '100%',
-                    objectFit: 'cover',
-                    objectPosition: 'center',
+                    width: 118,
+                    height: 118,
+                    objectFit: 'contain',
                     display: 'block',
-                    transition: 'transform 0.3s ease',
+                    transition: 'transform 0.25s ease',
+                    filter: 'drop-shadow(0 2px 6px rgba(0,0,0,0.08))',
                   }}
                 />
-                {/* "Coloring Sheet" badge overlay */}
-                <div style={{
-                  position: 'absolute',
-                  bottom: 6,
-                  right: 6,
-                  background: 'rgba(0,0,0,0.55)',
-                  backdropFilter: 'blur(4px)',
-                  borderRadius: 6,
-                  padding: '3px 7px',
-                  fontSize: '0.63rem',
-                  fontWeight: 700,
-                  color: 'white',
-                  letterSpacing: '0.03em',
-                  textTransform: 'uppercase',
-                }}>
-                  🖨️ Print &amp; Color
-                </div>
               </>
             ) : (
               <div
