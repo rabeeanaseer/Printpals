@@ -41,6 +41,7 @@ export default function PageFooter() {
           <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: 9 }}>
             {[
               { l: 'About PrintPals', h: '/about' },
+              { l: 'About the Creator', h: '/about-author' },
               { l: 'Contact Us', h: '/contact' },
               { l: 'Request a Printable', h: '/contact#request' },
             ].map(link => (

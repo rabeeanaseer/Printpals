@@ -9,6 +9,7 @@ import PrivacyPage from "@/pages/PrivacyPage";
 import TermsPage from "@/pages/TermsPage";
 import DisclaimerPage from "@/pages/DisclaimerPage";
 import ContactPage from "@/pages/ContactPage";
+import AuthorPage from "@/pages/AuthorPage";
 import NotFound from "@/pages/not-found";
 
 function Router() {
@@ -18,6 +19,7 @@ function Router() {
       <Route path="/print/:id" component={PrintPage} />
       <Route path="/category/:cat" component={CategoryPage} />
       <Route path="/about" component={AboutPage} />
+      <Route path="/about-author" component={AuthorPage} />
       <Route path="/contact" component={ContactPage} />
       <Route path="/privacy-policy" component={PrivacyPage} />
       <Route path="/terms" component={TermsPage} />

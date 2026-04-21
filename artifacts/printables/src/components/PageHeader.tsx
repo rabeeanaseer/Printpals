@@ -73,6 +73,9 @@ export default function PageHeader({ searchValue = '', onSearch }: PageHeaderPro
           <Link href={base + "/about"} style={{ padding: '6px 12px', borderRadius: 8, fontWeight: 600, fontSize: '0.86rem', color: '#555', textDecoration: 'none' }}
             onMouseEnter={e => { e.currentTarget.style.color = '#7c3aed'; }}
             onMouseLeave={e => { e.currentTarget.style.color = '#555'; }}>About</Link>
+          <Link href={base + "/about-author"} style={{ padding: '6px 12px', borderRadius: 8, fontWeight: 600, fontSize: '0.86rem', color: '#555', textDecoration: 'none' }}
+            onMouseEnter={e => { e.currentTarget.style.color = '#7c3aed'; }}
+            onMouseLeave={e => { e.currentTarget.style.color = '#555'; }}>Creator</Link>
           <Link href={base + "/contact"} style={{ padding: '6px 12px', borderRadius: 8, fontWeight: 600, fontSize: '0.86rem', color: '#555', textDecoration: 'none' }}
             onMouseEnter={e => { e.currentTarget.style.color = '#7c3aed'; }}
             onMouseLeave={e => { e.currentTarget.style.color = '#555'; }}>Contact</Link>
