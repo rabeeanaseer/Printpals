@@ -3,10 +3,12 @@ import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import HomePage from "@/pages/HomePage";
 import PrintPage from "@/pages/PrintPage";
+import CategoryPage from "@/pages/CategoryPage";
 import AboutPage from "@/pages/AboutPage";
 import PrivacyPage from "@/pages/PrivacyPage";
 import TermsPage from "@/pages/TermsPage";
 import DisclaimerPage from "@/pages/DisclaimerPage";
+import ContactPage from "@/pages/ContactPage";
 import NotFound from "@/pages/not-found";
 
 function Router() {
@@ -14,7 +16,9 @@ function Router() {
     <Switch>
       <Route path="/" component={HomePage} />
       <Route path="/print/:id" component={PrintPage} />
+      <Route path="/category/:cat" component={CategoryPage} />
       <Route path="/about" component={AboutPage} />
+      <Route path="/contact" component={ContactPage} />
       <Route path="/privacy-policy" component={PrivacyPage} />
       <Route path="/terms" component={TermsPage} />
       <Route path="/disclaimer" component={DisclaimerPage} />

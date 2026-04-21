@@ -1,25 +1,13 @@
-import { Link } from "wouter";
-import { ArrowLeft, Printer, FileText } from "lucide-react";
+import { FileText } from "lucide-react";
+import PageHeader from "@/components/PageHeader";
+import PageFooter from "@/components/PageFooter";
 
 export default function TermsPage() {
-  const base = import.meta.env.BASE_URL.replace(/\/$/, "");
-
   return (
-    <div style={{ minHeight: '100vh', background: '#f8f7ff' }}>
-      <header style={{ background: 'white', borderBottom: '1.5px solid #ede9fe', padding: '0 20px', height: 64, display: 'flex', alignItems: 'center', gap: 12 }}>
-        <Link href={base + "/"} style={{ display: 'flex', alignItems: 'center', gap: 6, textDecoration: 'none', color: '#7c3aed', fontWeight: 700, fontSize: '0.88rem' }}>
-          <ArrowLeft style={{ width: 16, height: 16 }} /> Back to Printables
-        </Link>
-        <div style={{ flex: 1 }} />
-        <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-          <div style={{ background: '#7c3aed', borderRadius: 10, padding: '6px 8px' }}>
-            <Printer style={{ width: 18, height: 18, color: 'white' }} />
-          </div>
-          <span style={{ fontWeight: 900, fontSize: '1.1rem', color: '#1a1a2e' }}>PrintPals</span>
-        </div>
-      </header>
+    <div style={{ minHeight: '100vh', background: '#f8f7ff', display: 'flex', flexDirection: 'column' }}>
+      <PageHeader />
 
-      <main style={{ maxWidth: 760, margin: '0 auto', padding: '48px 20px' }}>
+      <main style={{ maxWidth: 760, margin: '0 auto', padding: '48px 20px', flex: 1, width: '100%', boxSizing: 'border-box' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 32 }}>
           <div style={{ background: '#f3f0ff', borderRadius: 12, padding: 12 }}>
             <FileText style={{ width: 28, height: 28, color: '#7c3aed' }} />
@@ -94,6 +82,7 @@ Users are responsible for determining the appropriateness of content for their s
           </div>
         ))}
       </main>
+      <PageFooter />
     </div>
   );
 }

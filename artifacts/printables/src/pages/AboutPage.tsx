@@ -1,28 +1,18 @@
 import { Link } from "wouter";
-import { Printer, ArrowLeft, Star, FileText, Download, Heart } from "lucide-react";
+import { Printer, Star, FileText, Download, Heart } from "lucide-react";
 import { ContentLibrary } from "@/lib/content-library";
+import PageHeader from "@/components/PageHeader";
+import PageFooter from "@/components/PageFooter";
 
 export default function AboutPage() {
   const base = import.meta.env.BASE_URL.replace(/\/$/, "");
   const total = ContentLibrary.length;
 
   return (
-    <div style={{ minHeight: '100vh', background: '#f8f7ff' }}>
-      {/* Header */}
-      <header style={{ background: 'white', borderBottom: '1.5px solid #ede9fe', padding: '0 20px', height: 64, display: 'flex', alignItems: 'center', gap: 12 }}>
-        <Link href={base + "/"} style={{ display: 'flex', alignItems: 'center', gap: 6, textDecoration: 'none', color: '#7c3aed', fontWeight: 700, fontSize: '0.88rem' }}>
-          <ArrowLeft style={{ width: 16, height: 16 }} /> Back to Printables
-        </Link>
-        <div style={{ flex: 1 }} />
-        <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-          <div style={{ background: '#7c3aed', borderRadius: 10, padding: '6px 8px' }}>
-            <Printer style={{ width: 18, height: 18, color: 'white' }} />
-          </div>
-          <span style={{ fontWeight: 900, fontSize: '1.1rem', color: '#1a1a2e' }}>PrintPals</span>
-        </div>
-      </header>
+    <div style={{ minHeight: '100vh', background: '#f8f7ff', display: 'flex', flexDirection: 'column' }}>
+      <PageHeader />
 
-      <main style={{ maxWidth: 800, margin: '0 auto', padding: '48px 20px' }}>
+      <main style={{ maxWidth: 800, margin: '0 auto', padding: '48px 20px', flex: 1, width: '100%', boxSizing: 'border-box' }}>
         <div style={{ textAlign: 'center', marginBottom: 48 }}>
           <div style={{ fontSize: '3rem', marginBottom: 16 }}>🖨️</div>
           <h1 style={{ fontSize: '2.2rem', fontWeight: 900, color: '#1a1a2e', marginBottom: 12 }}>About PrintPals</h1>
@@ -102,6 +92,7 @@ Questions? Suggestions? We'd love to hear from you — your feedback helps us ad
           </Link>
         </div>
       </main>
+      <PageFooter />
     </div>
   );
 }

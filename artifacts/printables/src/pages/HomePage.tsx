@@ -1,351 +1,303 @@
 import { useState, useMemo } from "react";
-import { Search, Printer, BookOpen, Shapes, Calculator, Cat, Apple, Leaf, Heart, CalendarDays, LayoutGrid, Download, Star, Users, FileText, ChevronDown } from "lucide-react";
 import { Link } from "wouter";
+import { Star, Users, TrendingUp, ChevronDown, ChevronUp, ArrowRight, Download, Printer } from "lucide-react";
 import { ContentLibrary, CATEGORY_META, type Category } from "@/lib/content-library";
+import PageHeader from "@/components/PageHeader";
+import PageFooter from "@/components/PageFooter";
 import PrintCard from "@/components/PrintCard";
+import {
+  AlphabetIcon, NumbersIcon, MathIcon, ShapesIcon,
+  AnimalsIcon, FruitsIcon, VegetablesIcon, AnatomyIcon,
+  PlannersIcon, MasterIcon
+} from "@/components/CssArtIcon";
 
-const ALL_CATEGORIES: Category[] = ['alphabet', 'numbers', 'math', 'shapes', 'animals', 'fruits', 'vegetables', 'anatomy', 'planners', 'master'];
+const ALL_CATS: Category[] = ['alphabet','numbers','math','shapes','animals','fruits','vegetables','anatomy','planners','master'];
 
-const CAT_ICONS: Record<string, React.ReactNode> = {
-  alphabet: <BookOpen className="w-4 h-4" />,
-  numbers: <Calculator className="w-4 h-4" />,
-  math: <Calculator className="w-4 h-4" />,
-  shapes: <Shapes className="w-4 h-4" />,
-  animals: <Cat className="w-4 h-4" />,
-  fruits: <Apple className="w-4 h-4" />,
-  vegetables: <Leaf className="w-4 h-4" />,
-  anatomy: <Heart className="w-4 h-4" />,
-  planners: <CalendarDays className="w-4 h-4" />,
-  master: <LayoutGrid className="w-4 h-4" />,
+const CAT_ART: Record<string, React.ReactNode> = {
+  alphabet: <AlphabetIcon />,
+  numbers: <NumbersIcon />,
+  math: <MathIcon />,
+  shapes: <ShapesIcon />,
+  animals: <AnimalsIcon />,
+  fruits: <FruitsIcon />,
+  vegetables: <VegetablesIcon />,
+  anatomy: <AnatomyIcon />,
+  planners: <PlannersIcon />,
+  master: <MasterIcon />,
 };
 
+const CAT_TAGLINES: Record<string, string> = {
+  alphabet: 'Uppercase, lowercase & tracing practice',
+  numbers: 'Count & trace 1 through 100',
+  math: 'Symbols, fractions & reference sheets',
+  shapes: 'Circles, squares, triangles & more',
+  animals: 'Lions, pandas, dolphins & 50+ more',
+  fruits: 'Apples, mangoes, dragonfruit & more',
+  vegetables: 'Carrots, broccoli & garden favorites',
+  anatomy: 'Body outlines for science learning',
+  planners: 'Daily, weekly & budget organizers',
+  master: 'Multi-item reference super-sheets',
+};
+
+const FAQS = [
+  { q: 'Are these printables really 100% free?', a: 'Yes, completely! Every single worksheet on PrintPals is free to download and print, forever. No sign-up, no account, no credit card — just click and print.' },
+  { q: 'How do I print a worksheet?', a: 'Click the purple "Print" button on any card. Your browser\'s print dialog will open with the sheet optimized for A4/Letter paper. For best results, select "Fit to Page" and disable headers/footers in your browser\'s print settings.' },
+  { q: 'Can I use these in my classroom?', a: 'Absolutely! All printables on PrintPals are free for personal and classroom use. Teachers and homeschoolers are welcome to print as many copies as needed for their students at no charge.' },
+  { q: 'What ages are these worksheets designed for?', a: 'Our library spans ages 2 through 12+. Alphabet and number tracing sheets are great for pre-K through Grade 1. Shape, math, and animal sheets work for ages 4–10. Planners and reference sheets suit older kids and even adults.' },
+  { q: 'What file format are the downloads?', a: 'All sheets download as SVG (Scalable Vector Graphics), which means they print crisp and sharp at any paper size — A4, Letter, or larger. SVG files work with any modern browser or graphics app.' },
+  { q: 'How often do you add new printables?', a: 'We add new sheets regularly based on teacher feedback and user requests. Use the "Request a Printable" form on our Contact page to suggest your next favorite!' },
+  { q: 'Can I use these commercially (sell or distribute)?', a: 'Our printables are licensed for personal and classroom use only. Commercial redistribution or resale is not permitted. If you need a commercial license, please contact us.' },
+  { q: 'Do I need any special software to print?', a: 'No special software needed! Just a modern web browser (Chrome, Firefox, Safari, or Edge). The print view is fully optimized — all UI is hidden and only the worksheet is printed.' },
+];
+
 export default function HomePage() {
-  const [search, setSearch] = useState("");
-  const [activeCategory, setActiveCategory] = useState<Category | "all">("all");
-  const [megaMenuOpen, setMegaMenuOpen] = useState(false);
   const base = import.meta.env.BASE_URL.replace(/\/$/, "");
+  const [search, setSearch] = useState("");
+  const [openFaq, setOpenFaq] = useState<number | null>(null);
+  const [showSearch, setShowSearch] = useState(false);
 
-  const filtered = useMemo(() => {
-    let items = ContentLibrary;
-    if (activeCategory !== "all") {
-      items = items.filter(i => i.category === activeCategory);
-    }
-    if (search.trim()) {
-      const q = search.toLowerCase();
-      items = items.filter(i =>
-        i.title.toLowerCase().includes(q) ||
-        i.tags.some(t => t.toLowerCase().includes(q)) ||
-        i.description.toLowerCase().includes(q)
-      );
-    }
-    return items;
-  }, [search, activeCategory]);
+  const searchResults = useMemo(() => {
+    if (!search.trim()) return [];
+    const q = search.toLowerCase();
+    return ContentLibrary.filter(i =>
+      i.title.toLowerCase().includes(q) ||
+      i.tags?.some(t => t.toLowerCase().includes(q)) ||
+      i.description?.toLowerCase().includes(q)
+    );
+  }, [search]);
 
-  const totalCount = ContentLibrary.length;
+  const total = ContentLibrary.length;
+  const isSearching = search.trim().length > 0;
+
+  function handleSearch(q: string) {
+    setSearch(q);
+    if (q.trim()) setShowSearch(true);
+    else setShowSearch(false);
+  }
 
   return (
-    <div className="min-h-screen" style={{ background: '#f8f7ff', fontFamily: "'Inter', 'Segoe UI', sans-serif" }}>
+    <div style={{ minHeight: '100vh', background: '#f8f7ff', fontFamily: "'Inter','Segoe UI',sans-serif", display: 'flex', flexDirection: 'column' }}>
+      <PageHeader searchValue={search} onSearch={handleSearch} />
 
-      {/* ═══════════════════ MEGA HEADER ═══════════════════ */}
-      <header className="no-print sticky top-0 z-50 shadow-md" style={{ background: 'white', borderBottom: '1.5px solid #ede9fe' }}>
-        {/* Top bar */}
-        <div style={{ background: 'linear-gradient(90deg, #7c3aed, #a855f7)', padding: '6px 0', textAlign: 'center' }}>
-          <p style={{ color: 'white', fontSize: '0.78rem', fontWeight: 600, letterSpacing: '0.02em' }}>
-            🎨 {totalCount}+ Free Printable Worksheets — No Sign-up Required!
-          </p>
-        </div>
-
-        {/* Main nav bar */}
-        <div style={{ maxWidth: 1280, margin: '0 auto', padding: '0 20px', display: 'flex', alignItems: 'center', gap: 16, height: 64 }}>
-          {/* Logo */}
-          <Link href={base + "/"} style={{ display: 'flex', alignItems: 'center', gap: 10, textDecoration: 'none', flexShrink: 0 }}>
-            <div style={{ background: 'linear-gradient(135deg, #7c3aed, #a855f7)', borderRadius: 12, padding: '8px 10px', display: 'flex' }}>
-              <Printer style={{ width: 22, height: 22, color: 'white' }} />
-            </div>
-            <div>
-              <div style={{ fontWeight: 900, fontSize: '1.25rem', color: '#1a1a2e', lineHeight: 1 }}>PrintPals</div>
-              <div style={{ fontSize: '0.62rem', color: '#7c3aed', fontWeight: 600, letterSpacing: '0.06em', textTransform: 'uppercase' }}>Free Printables</div>
-            </div>
-          </Link>
-
-          {/* Nav links */}
-          <nav style={{ display: 'flex', alignItems: 'center', gap: 4, marginLeft: 8 }} className="hidden md:flex">
-            <button
-              onClick={() => setMegaMenuOpen(!megaMenuOpen)}
-              style={{ display: 'flex', alignItems: 'center', gap: 4, padding: '6px 14px', borderRadius: 8, border: 'none', cursor: 'pointer', fontWeight: 600, fontSize: '0.88rem', color: '#1a1a2e', background: megaMenuOpen ? '#f3f0ff' : 'transparent', transition: 'all 0.15s' }}
-            >
-              Categories <ChevronDown style={{ width: 14, height: 14, transform: megaMenuOpen ? 'rotate(180deg)' : '', transition: 'transform 0.2s' }} />
+      {isSearching ? (
+        <main style={{ maxWidth: 1280, margin: '0 auto', padding: '28px 16px 60px', flex: 1, width: '100%', boxSizing: 'border-box' }}>
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 20 }}>
+            <h2 style={{ fontWeight: 800, color: '#1a1a2e', fontSize: '1.1rem', margin: 0 }}>
+              Search results for "<span style={{ color: '#7c3aed' }}>{search}</span>"
+              <span style={{ marginLeft: 8, fontWeight: 400, color: '#9ca3af', fontSize: '0.9rem' }}>({searchResults.length} sheets)</span>
+            </h2>
+            <button onClick={() => setSearch("")} style={{ padding: '6px 14px', background: '#f3f0ff', color: '#7c3aed', border: 'none', borderRadius: 8, fontWeight: 700, cursor: 'pointer', fontSize: '0.84rem' }}>
+              ✕ Clear
             </button>
-            <Link href={base + "/about"} style={{ padding: '6px 14px', borderRadius: 8, fontWeight: 600, fontSize: '0.88rem', color: '#555', textDecoration: 'none' }}>About</Link>
-          </nav>
-
-          {/* Search */}
-          <div style={{ flex: 1, maxWidth: 500, position: 'relative' }}>
-            <Search style={{ position: 'absolute', left: 12, top: '50%', transform: 'translateY(-50%)', width: 16, height: 16, color: '#9ca3af' }} />
-            <input
-              type="search"
-              value={search}
-              onChange={e => { setSearch(e.target.value); setActiveCategory("all"); }}
-              placeholder="Search: lion, circle, fraction, planner..."
-              style={{ width: '100%', paddingLeft: 40, paddingRight: 16, paddingTop: 10, paddingBottom: 10, borderRadius: 12, border: '2px solid #e5e7eb', background: '#f9fafb', fontSize: '0.88rem', outline: 'none', transition: 'border 0.15s', boxSizing: 'border-box' }}
-              onFocus={e => { e.currentTarget.style.borderColor = '#7c3aed'; e.currentTarget.style.background = 'white'; }}
-              onBlur={e => { e.currentTarget.style.borderColor = '#e5e7eb'; e.currentTarget.style.background = '#f9fafb'; }}
-            />
           </div>
-
-          <span style={{ fontSize: '0.8rem', color: '#9ca3af', fontWeight: 500, flexShrink: 0, display: 'none' }} className="md:block">
-            {filtered.length} results
-          </span>
-        </div>
-
-        {/* Mega menu dropdown */}
-        {megaMenuOpen && (
-          <div
-            style={{ position: 'absolute', top: '100%', left: 0, right: 0, background: 'white', borderBottom: '2px solid #ede9fe', boxShadow: '0 8px 32px rgba(124,58,237,0.12)', zIndex: 100, padding: '24px 0' }}
-            onMouseLeave={() => setMegaMenuOpen(false)}
-          >
-            <div style={{ maxWidth: 1280, margin: '0 auto', padding: '0 20px' }}>
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(160px, 1fr))', gap: 12 }}>
-                {ALL_CATEGORIES.map(cat => {
-                  const meta = CATEGORY_META[cat];
-                  const count = ContentLibrary.filter(i => i.category === cat).length;
-                  return (
-                    <button
-                      key={cat}
-                      onClick={() => { setActiveCategory(cat); setMegaMenuOpen(false); setSearch(""); }}
-                      style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', padding: '14px 16px', borderRadius: 12, border: '1.5px solid #e5e7eb', background: meta.color + '55', cursor: 'pointer', textAlign: 'left', transition: 'all 0.15s' }}
-                      onMouseEnter={e => { e.currentTarget.style.borderColor = '#7c3aed'; e.currentTarget.style.transform = 'translateY(-2px)'; }}
-                      onMouseLeave={e => { e.currentTarget.style.borderColor = '#e5e7eb'; e.currentTarget.style.transform = ''; }}
-                    >
-                      <span style={{ fontSize: '1.5rem', marginBottom: 6 }}>{meta.icon}</span>
-                      <span style={{ fontWeight: 700, fontSize: '0.9rem', color: '#1a1a2e' }}>{meta.label}</span>
-                      <span style={{ fontSize: '0.75rem', color: '#6b7280', marginTop: 2 }}>{count} sheets</span>
-                    </button>
-                  );
-                })}
-              </div>
-            </div>
-          </div>
-        )}
-      </header>
-
-      {/* ═══════════════════ HERO SECTION ═══════════════════ */}
-      <section className="no-print" style={{ background: 'linear-gradient(135deg, #f3f0ff 0%, #fdf4ff 50%, #fff7ed 100%)', borderBottom: '1.5px solid #ede9fe', padding: '48px 20px 40px' }}>
-        <div style={{ maxWidth: 900, margin: '0 auto', textAlign: 'center' }}>
-          <div style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: '#7c3aed', color: 'white', padding: '6px 16px', borderRadius: 999, fontSize: '0.78rem', fontWeight: 700, letterSpacing: '0.06em', textTransform: 'uppercase', marginBottom: 20 }}>
-            <Star style={{ width: 12, height: 12 }} /> Free Forever · No Login
-          </div>
-          <h1 style={{ fontSize: 'clamp(2rem, 5vw, 3.2rem)', fontWeight: 900, color: '#1a1a2e', lineHeight: 1.15, margin: '0 0 16px' }}>
-            {totalCount}+ Free Printable Worksheets<br />
-            <span style={{ background: 'linear-gradient(135deg, #7c3aed, #a855f7)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>for Kids & Educators</span>
-          </h1>
-          <p style={{ color: '#6b7280', fontSize: '1.08rem', maxWidth: 600, margin: '0 auto 28px', lineHeight: 1.65 }}>
-            Coloring pages, alphabet tracing, number sheets, animal art, fruit collections, math references, planners — all generated instantly as SVG. Print-ready, zero ads.
-          </p>
-
-          {/* Stats bar */}
-          <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: 24, fontSize: '0.88rem', color: '#4b5563', fontWeight: 600 }}>
-            {[
-              { icon: <FileText style={{ width: 16, height: 16, color: '#7c3aed' }} />, label: `${totalCount}+ Sheets` },
-              { icon: <Download style={{ width: 16, height: 16, color: '#7c3aed' }} />, label: 'Instant Download' },
-              { icon: <Printer style={{ width: 16, height: 16, color: '#7c3aed' }} />, label: 'Print Ready' },
-              { icon: <Star style={{ width: 16, height: 16, color: '#7c3aed' }} />, label: '100% Free' },
-              { icon: <Users style={{ width: 16, height: 16, color: '#7c3aed' }} />, label: 'For All Ages' },
-            ].map((s, i) => (
-              <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
-                {s.icon} {s.label}
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ═══════════════════ CATEGORY TABS ═══════════════════ */}
-      <div className="no-print" style={{ background: 'white', borderBottom: '1.5px solid #f3f4f6', position: 'sticky', top: 113, zIndex: 40 }}>
-        <div style={{ maxWidth: 1280, margin: '0 auto', padding: '0 16px', display: 'flex', alignItems: 'center', gap: 6, overflowX: 'auto', height: 52, scrollbarWidth: 'none' }}>
-          <button
-            onClick={() => { setActiveCategory("all"); setSearch(""); }}
-            style={{
-              display: 'flex', alignItems: 'center', gap: 6, padding: '6px 14px', borderRadius: 999, fontSize: '0.82rem', fontWeight: 700, whiteSpace: 'nowrap', border: '2px solid', cursor: 'pointer', transition: 'all 0.15s', flexShrink: 0,
-              background: activeCategory === "all" ? '#1a1a2e' : 'white',
-              color: activeCategory === "all" ? 'white' : '#4b5563',
-              borderColor: activeCategory === "all" ? '#1a1a2e' : '#e5e7eb',
-            }}
-          >
-            <LayoutGrid style={{ width: 14, height: 14 }} />
-            All ({totalCount})
-          </button>
-
-          {ALL_CATEGORIES.map(cat => {
-            const meta = CATEGORY_META[cat];
-            const count = ContentLibrary.filter(i => i.category === cat).length;
-            const isActive = activeCategory === cat;
-            return (
-              <button
-                key={cat}
-                onClick={() => { setActiveCategory(isActive ? "all" : cat); setSearch(""); }}
-                style={{
-                  display: 'flex', alignItems: 'center', gap: 6, padding: '6px 13px', borderRadius: 999, fontSize: '0.82rem', fontWeight: 700, whiteSpace: 'nowrap', border: '2px solid', cursor: 'pointer', transition: 'all 0.15s', flexShrink: 0,
-                  background: isActive ? meta.color : 'white',
-                  color: isActive ? '#1a1a2e' : '#6b7280',
-                  borderColor: isActive ? '#1a1a2e' : '#e5e7eb',
-                }}
-              >
-                {CAT_ICONS[cat]} {meta.label} ({count})
+          {searchResults.length === 0 ? (
+            <div style={{ textAlign: 'center', padding: '80px 20px' }}>
+              <div style={{ fontSize: '3.5rem', marginBottom: 14 }}>🔍</div>
+              <h3 style={{ fontWeight: 700, color: '#374151', marginBottom: 8 }}>No results for "{search}"</h3>
+              <p style={{ color: '#9ca3af', marginBottom: 20 }}>Try "lion", "circle", "fraction", or "planner"</p>
+              <button onClick={() => setSearch("")} style={{ padding: '10px 24px', background: '#7c3aed', color: 'white', border: 'none', borderRadius: 11, fontWeight: 700, cursor: 'pointer' }}>
+                Browse All Printables
               </button>
-            );
-          })}
-        </div>
-      </div>
+            </div>
+          ) : (
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill,minmax(175px,1fr))', gap: '1rem' }}>
+              {searchResults.map(item => <PrintCard key={item.id} item={item} base={base} />)}
+            </div>
+          )}
+        </main>
+      ) : (
+        <>
+          {/* ══ HERO ══ */}
+          <section style={{ background: 'linear-gradient(135deg,#f3f0ff 0%,#fdf4ff 50%,#fff7ed 100%)', borderBottom: '1.5px solid #ede9fe', padding: '52px 20px 44px' }}>
+            <div style={{ maxWidth: 860, margin: '0 auto', textAlign: 'center' }}>
+              <div style={{ display: 'inline-flex', alignItems: 'center', gap: 7, background: '#7c3aed', color: 'white', padding: '5px 16px', borderRadius: 999, fontSize: '0.76rem', fontWeight: 700, letterSpacing: '0.06em', textTransform: 'uppercase', marginBottom: 22 }}>
+                <Star style={{ width: 11, height: 11 }} /> Free Forever · No Login · No Ads
+              </div>
+              <h1 style={{ fontSize: 'clamp(1.9rem,5vw,3.2rem)', fontWeight: 900, color: '#1a1a2e', lineHeight: 1.12, margin: '0 0 14px' }}>
+                {total}+ Free Printable Worksheets<br />
+                <span style={{ background: 'linear-gradient(135deg,#7c3aed,#a855f7)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>for Kids &amp; Educators</span>
+              </h1>
+              <p style={{ color: '#6b7280', fontSize: '1.05rem', maxWidth: 580, margin: '0 auto 28px', lineHeight: 1.65 }}>
+                Coloring pages, alphabet tracing, number sheets, animal art, math references &amp; planners — all generated instantly as SVG. Print-ready, zero ads.
+              </p>
 
-      {/* ═══════════════════ MAIN GRID ═══════════════════ */}
-      <main style={{ maxWidth: 1280, margin: '0 auto', padding: '28px 16px 48px' }}>
-        {filtered.length === 0 ? (
-          <div style={{ textAlign: 'center', padding: '80px 20px' }}>
-            <div style={{ fontSize: '4rem', marginBottom: 16 }}>🔍</div>
-            <h3 style={{ fontSize: '1.3rem', fontWeight: 700, color: '#374151', marginBottom: 8 }}>No results found</h3>
-            <p style={{ color: '#9ca3af', marginBottom: 20 }}>Try "lion", "circle", "fraction 1/2", or "number 5"</p>
-            <button
-              onClick={() => { setSearch(""); setActiveCategory("all"); }}
-              style={{ padding: '10px 24px', background: '#7c3aed', color: 'white', border: 'none', borderRadius: 12, fontWeight: 700, cursor: 'pointer', fontSize: '0.9rem' }}
-            >
-              Show All Printables
-            </button>
-          </div>
-        ) : (
-          <>
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 20 }}>
-              <h2 style={{ fontSize: '1.1rem', fontWeight: 800, color: '#1a1a2e' }}>
-                {activeCategory === "all" ? "All Printables" : CATEGORY_META[activeCategory as Category].label}
-                <span style={{ marginLeft: 8, fontWeight: 400, color: '#9ca3af', fontSize: '0.9rem' }}>({filtered.length} sheets)</span>
+              {/* Social Proof */}
+              <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: 20, marginBottom: 32 }}>
+                {[
+                  { icon: <Users style={{ width: 18, height: 18, color: '#7c3aed' }} />, main: '50,000+', sub: 'Teachers & Parents' },
+                  { icon: <Download style={{ width: 18, height: 18, color: '#059669' }} />, main: '1.2 Million', sub: 'Downloads This Year' },
+                  { icon: <Star style={{ width: 18, height: 18, color: '#d97706' }} />, main: `${total}+`, sub: 'Free Printables' },
+                  { icon: <TrendingUp style={{ width: 18, height: 18, color: '#7c3aed' }} />, main: '100%', sub: 'Free Forever' },
+                ].map((s, i) => (
+                  <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 10, background: 'white', padding: '12px 18px', borderRadius: 14, border: '1.5px solid #ede9fe', boxShadow: '0 2px 8px rgba(124,58,237,0.08)' }}>
+                    {s.icon}
+                    <div style={{ textAlign: 'left' }}>
+                      <div style={{ fontWeight: 900, fontSize: '1.1rem', color: '#1a1a2e', lineHeight: 1 }}>{s.main}</div>
+                      <div style={{ fontSize: '0.74rem', color: '#6b7280', fontWeight: 500 }}>{s.sub}</div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              <div style={{ display: 'flex', gap: 12, justifyContent: 'center', flexWrap: 'wrap' }}>
+                <a href="#categories" style={{ display: 'inline-flex', alignItems: 'center', gap: 7, padding: '13px 28px', background: 'linear-gradient(135deg,#7c3aed,#a855f7)', color: 'white', textDecoration: 'none', borderRadius: 12, fontWeight: 800, fontSize: '0.95rem', boxShadow: '0 4px 16px rgba(124,58,237,0.32)' }}>
+                  Browse Printables <ArrowRight style={{ width: 16, height: 16 }} />
+                </a>
+                <Link href={`${base}/contact#request`} style={{ display: 'inline-flex', alignItems: 'center', gap: 7, padding: '13px 28px', background: 'white', color: '#7c3aed', textDecoration: 'none', borderRadius: 12, fontWeight: 800, fontSize: '0.95rem', border: '2px solid #ede9fe' }}>
+                  Request a Printable
+                </Link>
+              </div>
+            </div>
+          </section>
+
+          {/* ══ CATEGORY CARDS ══ */}
+          <section id="categories" style={{ maxWidth: 1280, margin: '0 auto', padding: '52px 20px 40px', width: '100%', boxSizing: 'border-box' }}>
+            <div style={{ textAlign: 'center', marginBottom: 40 }}>
+              <h2 style={{ fontWeight: 900, fontSize: 'clamp(1.5rem,3vw,2.1rem)', color: '#1a1a2e', margin: '0 0 10px' }}>
+                Browse by Category
               </h2>
+              <p style={{ color: '#6b7280', fontSize: '0.98rem', margin: 0 }}>
+                Choose a topic and find the perfect printable for your child or classroom
+              </p>
             </div>
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(175px, 1fr))', gap: '1rem' }}>
-              {filtered.map(item => (
-                <PrintCard key={item.id} item={item} base={base} />
-              ))}
-            </div>
-          </>
-        )}
-      </main>
 
-      {/* ═══════════════════ MEGA FOOTER ═══════════════════ */}
-      <footer className="no-print" style={{ background: '#1a1a2e', color: 'white', marginTop: 0 }}>
-        {/* Main footer grid */}
-        <div style={{ maxWidth: 1280, margin: '0 auto', padding: '48px 20px 32px', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: 40 }}>
-          {/* Column 1: Company */}
-          <div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 16 }}>
-              <div style={{ background: '#7c3aed', borderRadius: 10, padding: '7px 9px' }}>
-                <Printer style={{ width: 18, height: 18, color: 'white' }} />
-              </div>
-              <span style={{ fontWeight: 900, fontSize: '1.1rem' }}>PrintPals</span>
-            </div>
-            <p style={{ color: '#9ca3af', fontSize: '0.85rem', lineHeight: 1.65, marginBottom: 16 }}>
-              The largest free printable worksheet library for kids, parents, and educators. Every sheet is generated dynamically as SVG — no image uploads ever.
-            </p>
-            <p style={{ color: '#6b7280', fontSize: '0.78rem' }}>
-              © {new Date().getFullYear()} PrintPals. All rights reserved.
-            </p>
-          </div>
-
-          {/* Column 2: Legal */}
-          <div>
-            <h4 style={{ fontWeight: 800, fontSize: '0.88rem', letterSpacing: '0.06em', textTransform: 'uppercase', color: '#d1d5db', marginBottom: 16 }}>Legal</h4>
-            <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: 10 }}>
-              {[
-                { label: 'About PrintPals', href: '/about' },
-                { label: 'Privacy Policy', href: '/privacy-policy' },
-                { label: 'Terms of Service', href: '/terms' },
-                { label: 'Disclaimer', href: '/disclaimer' },
-              ].map(link => (
-                <li key={link.href}>
-                  <Link
-                    href={base + link.href}
-                    style={{ color: '#9ca3af', textDecoration: 'none', fontSize: '0.88rem', transition: 'color 0.15s' }}
-                    onMouseEnter={(e: React.MouseEvent<HTMLAnchorElement>) => e.currentTarget.style.color = 'white'}
-                    onMouseLeave={(e: React.MouseEvent<HTMLAnchorElement>) => e.currentTarget.style.color = '#9ca3af'}
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill,minmax(280px,1fr))', gap: '20px' }}>
+              {ALL_CATS.map(cat => {
+                const meta = CATEGORY_META[cat];
+                const count = ContentLibrary.filter(i => i.category === cat).length;
+                return (
+                  <div
+                    key={cat}
+                    style={{ background: 'white', borderRadius: 20, border: '1.5px solid #e5e7eb', overflow: 'hidden', transition: 'all 0.2s', boxShadow: '0 2px 8px rgba(0,0,0,0.04)', display: 'flex', flexDirection: 'column' }}
+                    onMouseEnter={e => { (e.currentTarget as HTMLDivElement).style.transform = 'translateY(-4px)'; (e.currentTarget as HTMLDivElement).style.boxShadow = '0 10px 32px rgba(124,58,237,0.14)'; (e.currentTarget as HTMLDivElement).style.borderColor = '#c4b5fd'; }}
+                    onMouseLeave={e => { (e.currentTarget as HTMLDivElement).style.transform = ''; (e.currentTarget as HTMLDivElement).style.boxShadow = '0 2px 8px rgba(0,0,0,0.04)'; (e.currentTarget as HTMLDivElement).style.borderColor = '#e5e7eb'; }}
                   >
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
+                    {/* Art area */}
+                    <div style={{ background: `linear-gradient(135deg, ${meta.color}88, ${meta.color}44)`, height: 130, display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'relative', overflow: 'hidden' }}>
+                      <div style={{ position: 'absolute', top: -20, right: -20, width: 100, height: 100, borderRadius: '50%', background: 'rgba(255,255,255,0.12)' }} />
+                      <div style={{ position: 'absolute', bottom: -30, left: -20, width: 80, height: 80, borderRadius: '50%', background: 'rgba(255,255,255,0.08)' }} />
+                      {CAT_ART[cat]}
+                    </div>
 
-          {/* Column 3: Categories */}
-          <div>
-            <h4 style={{ fontWeight: 800, fontSize: '0.88rem', letterSpacing: '0.06em', textTransform: 'uppercase', color: '#d1d5db', marginBottom: 16 }}>Categories</h4>
-            <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px 16px' }}>
-              {ALL_CATEGORIES.map(cat => (
-                <li key={cat}>
-                  <button
-                    onClick={() => { setActiveCategory(cat); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
-                    style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#9ca3af', fontSize: '0.85rem', padding: 0, textAlign: 'left', transition: 'color 0.15s', display: 'flex', alignItems: 'center', gap: 5 }}
-                    onMouseEnter={e => { (e.currentTarget as HTMLButtonElement).style.color = 'white'; }}
-                    onMouseLeave={e => { (e.currentTarget as HTMLButtonElement).style.color = '#9ca3af'; }}
-                  >
-                    <span>{CATEGORY_META[cat].icon}</span>
-                    {CATEGORY_META[cat].label}
-                  </button>
-                </li>
-              ))}
-            </ul>
-          </div>
+                    {/* Content */}
+                    <div style={{ padding: '18px 20px 20px', flex: 1, display: 'flex', flexDirection: 'column' }}>
+                      <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: 8, marginBottom: 6 }}>
+                        <h3 style={{ fontWeight: 900, fontSize: '1.05rem', color: '#1a1a2e', margin: 0, lineHeight: 1.25 }}>
+                          {cat === 'animals' ? 'The Animal Kingdom' :
+                           cat === 'fruits' ? 'Fruit Collection' :
+                           cat === 'alphabet' ? 'Alphabet Tracing' :
+                           cat === 'numbers' ? 'Number Tracing' :
+                           cat === 'math' ? 'Math Reference' :
+                           cat === 'shapes' ? 'Shapes & Geometry' :
+                           cat === 'vegetables' ? 'Vegetable Collection' :
+                           cat === 'anatomy' ? 'Human Anatomy' :
+                           cat === 'planners' ? 'Planners' :
+                           'Master Sheets'}
+                        </h3>
+                        <span style={{ flexShrink: 0, background: meta.color, color: '#1a1a2e', fontWeight: 800, fontSize: '0.72rem', padding: '3px 9px', borderRadius: 999 }}>
+                          {count}+ sheets
+                        </span>
+                      </div>
+                      <p style={{ color: '#6b7280', fontSize: '0.84rem', lineHeight: 1.6, margin: '0 0 16px', flex: 1 }}>
+                        {CAT_TAGLINES[cat]}
+                      </p>
+                      <Link
+                        href={`${base}/category/${cat}`}
+                        style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 7, padding: '10px 16px', background: `linear-gradient(135deg,${meta.color},${meta.color}cc)`, color: '#1a1a2e', textDecoration: 'none', borderRadius: 10, fontWeight: 800, fontSize: '0.86rem', transition: 'opacity 0.15s', border: `1.5px solid ${meta.color}` }}
+                        onMouseEnter={e => { e.currentTarget.style.opacity = '0.82'; }}
+                        onMouseLeave={e => { e.currentTarget.style.opacity = '1'; }}
+                      >
+                        View All {meta.label} <ArrowRight style={{ width: 14, height: 14 }} />
+                      </Link>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </section>
 
-          {/* Column 4: Social */}
-          <div>
-            <h4 style={{ fontWeight: 800, fontSize: '0.88rem', letterSpacing: '0.06em', textTransform: 'uppercase', color: '#d1d5db', marginBottom: 16 }}>Follow Us</h4>
-            <p style={{ color: '#9ca3af', fontSize: '0.85rem', marginBottom: 16, lineHeight: 1.6 }}>
-              Share your colored pages! Tag us and inspire other families.
-            </p>
-            <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap', marginBottom: 20 }}>
+          {/* ══ TRUST STRIP ══ */}
+          <div style={{ background: 'linear-gradient(135deg,#1a1a2e,#2d2d4e)', padding: '32px 20px' }}>
+            <div style={{ maxWidth: 1100, margin: '0 auto', display: 'flex', flexWrap: 'wrap', gap: 32, justifyContent: 'center', alignItems: 'center' }}>
               {[
-                { label: 'Pinterest', color: '#e60023', emoji: '📌' },
-                { label: 'Instagram', color: '#c13584', emoji: '📷' },
-                { label: 'Facebook', color: '#1877f2', emoji: '👍' },
-                { label: 'Twitter/X', color: '#000', emoji: '🐦' },
-                { label: 'YouTube', color: '#ff0000', emoji: '▶️' },
-              ].map(s => (
-                <button
-                  key={s.label}
-                  title={s.label}
-                  style={{ background: '#2d2d4e', border: 'none', borderRadius: 8, padding: '8px 10px', color: 'white', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 6, fontSize: '0.78rem', transition: 'all 0.15s' }}
-                  onMouseEnter={e => { (e.currentTarget as HTMLButtonElement).style.background = s.color; }}
-                  onMouseLeave={e => { (e.currentTarget as HTMLButtonElement).style.background = '#2d2d4e'; }}
-                >
-                  {s.emoji} {s.label}
-                </button>
+                { e: '🎨', t: 'Zero messy downloads', s: 'SVG generated on demand' },
+                { e: '🖨️', t: 'Print-perfect every time', s: 'A4 & Letter optimized' },
+                { e: '🔒', t: 'No account ever needed', s: 'Anonymous & secure' },
+                { e: '♻️', t: 'Always free', s: 'Supported by donations' },
+              ].map((item, i) => (
+                <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 12, color: 'white' }}>
+                  <span style={{ fontSize: '1.8rem' }}>{item.e}</span>
+                  <div>
+                    <div style={{ fontWeight: 800, fontSize: '0.9rem' }}>{item.t}</div>
+                    <div style={{ fontSize: '0.76rem', color: '#9ca3af' }}>{item.s}</div>
+                  </div>
+                </div>
               ))}
             </div>
-            <div style={{ background: '#2d2d4e', borderRadius: 12, padding: '14px 16px' }}>
-              <p style={{ color: '#d1d5db', fontSize: '0.82rem', fontWeight: 600, marginBottom: 8 }}>Newsletter</p>
-              <div style={{ display: 'flex', gap: 6 }}>
-                <input
-                  type="email"
-                  placeholder="your@email.com"
-                  style={{ flex: 1, padding: '7px 10px', borderRadius: 8, border: 'none', background: '#1a1a2e', color: 'white', fontSize: '0.82rem', outline: 'none' }}
-                />
-                <button style={{ padding: '7px 14px', background: '#7c3aed', border: 'none', borderRadius: 8, color: 'white', fontWeight: 700, fontSize: '0.82rem', cursor: 'pointer' }}>
-                  Join
-                </button>
+          </div>
+
+          {/* ══ FEATURED PRINTABLES TEASER ══ */}
+          <section style={{ maxWidth: 1280, margin: '0 auto', padding: '52px 20px 40px', width: '100%', boxSizing: 'border-box' }}>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 24, flexWrap: 'wrap', gap: 12 }}>
+              <div>
+                <h2 style={{ fontWeight: 900, fontSize: 'clamp(1.3rem,3vw,1.9rem)', color: '#1a1a2e', margin: 0 }}>Featured Printables</h2>
+                <p style={{ color: '#6b7280', fontSize: '0.88rem', margin: '4px 0 0' }}>A taste of what's in our library</p>
+              </div>
+              <Link href={`${base}/category/alphabet`} style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '9px 18px', background: 'white', color: '#7c3aed', textDecoration: 'none', borderRadius: 10, fontWeight: 700, fontSize: '0.86rem', border: '2px solid #ede9fe' }}>
+                Browse All <ArrowRight style={{ width: 14, height: 14 }} />
+              </Link>
+            </div>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill,minmax(175px,1fr))', gap: '1rem' }}>
+              {ContentLibrary.slice(0, 12).map(item => <PrintCard key={item.id} item={item} base={base} />)}
+            </div>
+          </section>
+
+          {/* ══ FAQ ACCORDION ══ */}
+          <section style={{ background: 'linear-gradient(135deg,#f3f0ff,#fdf4ff)', borderTop: '1.5px solid #ede9fe', padding: '52px 20px 60px' }}>
+            <div style={{ maxWidth: 780, margin: '0 auto' }}>
+              <div style={{ textAlign: 'center', marginBottom: 38 }}>
+                <h2 style={{ fontWeight: 900, fontSize: 'clamp(1.4rem,3vw,2rem)', color: '#1a1a2e', margin: '0 0 10px' }}>
+                  Frequently Asked Questions
+                </h2>
+                <p style={{ color: '#6b7280', fontSize: '0.96rem', margin: 0 }}>Everything you need to know about PrintPals</p>
+              </div>
+
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+                {FAQS.map((faq, i) => (
+                  <div
+                    key={i}
+                    style={{ background: 'white', borderRadius: 14, border: `1.5px solid ${openFaq === i ? '#c4b5fd' : '#e5e7eb'}`, overflow: 'hidden', transition: 'border 0.15s', boxShadow: openFaq === i ? '0 4px 18px rgba(124,58,237,0.1)' : '0 1px 4px rgba(0,0,0,0.04)' }}
+                  >
+                    <button
+                      onClick={() => setOpenFaq(openFaq === i ? null : i)}
+                      style={{ width: '100%', padding: '18px 20px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 12, background: 'none', border: 'none', cursor: 'pointer', textAlign: 'left' }}
+                    >
+                      <span style={{ fontWeight: 700, fontSize: '0.95rem', color: '#1a1a2e', lineHeight: 1.4 }}>{faq.q}</span>
+                      <span style={{ flexShrink: 0, color: '#7c3aed' }}>
+                        {openFaq === i ? <ChevronUp style={{ width: 18, height: 18 }} /> : <ChevronDown style={{ width: 18, height: 18 }} />}
+                      </span>
+                    </button>
+                    {openFaq === i && (
+                      <div style={{ padding: '0 20px 20px' }}>
+                        <p style={{ color: '#4b5563', fontSize: '0.9rem', lineHeight: 1.7, margin: 0 }}>{faq.a}</p>
+                      </div>
+                    )}
+                  </div>
+                ))}
+              </div>
+
+              <div style={{ textAlign: 'center', marginTop: 32 }}>
+                <p style={{ color: '#6b7280', fontSize: '0.9rem', marginBottom: 12 }}>Still have questions?</p>
+                <Link href={`${base}/contact`} style={{ display: 'inline-flex', alignItems: 'center', gap: 7, padding: '11px 26px', background: '#7c3aed', color: 'white', textDecoration: 'none', borderRadius: 11, fontWeight: 800, fontSize: '0.9rem', boxShadow: '0 4px 14px rgba(124,58,237,0.28)' }}>
+                  Contact Us <ArrowRight style={{ width: 15, height: 15 }} />
+                </Link>
               </div>
             </div>
-          </div>
-        </div>
+          </section>
+        </>
+      )}
 
-        {/* Bottom bar */}
-        <div style={{ borderTop: '1px solid #2d2d4e', padding: '16px 20px' }}>
-          <div style={{ maxWidth: 1280, margin: '0 auto', display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'space-between', gap: 12 }}>
-            <p style={{ color: '#6b7280', fontSize: '0.78rem' }}>
-              All worksheets are generated dynamically as SVG — zero image uploads, always print-ready.
-            </p>
-            <p style={{ color: '#6b7280', fontSize: '0.78rem' }}>
-              Made with ❤️ for kids and educators worldwide
-            </p>
-          </div>
-        </div>
-      </footer>
+      <PageFooter />
     </div>
   );
 }

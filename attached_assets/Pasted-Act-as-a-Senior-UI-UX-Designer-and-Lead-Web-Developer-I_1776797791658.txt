@@ -1,0 +1,35 @@
+Act as a Senior UI/UX Designer and Lead Web Developer. I need a total redesign of the homepage and the content engine.
+
+### 1. HOMEPAGE REDESIGN (Category-First Approach)
+- REMOVE the giant list of all printables from the homepage.
+- HERO SECTION: Keep the professional header and search bar. Add a 'Social Proof' section below it: "Used by 50,000+ Teachers & Parents" and "1.2 Million Downloads This Year."
+- CATEGORY CARDS: Use a beautiful 3-column grid of large cards. Each card must have:
+    - A representative HTML/CSS icon.
+    - Title (e.g., "The Animal Kingdom").
+    - Count (e.g., "450+ Printables").
+    - A 'View All' button that opens the full category page.
+- FAQ SECTION: Add an 'Accordion' style FAQ section at the bottom (e.g., "Are these free?", "How do I print?").
+
+### 2. ACCURATE HTML/CSS DRAWINGS (Replacing messy SVGs)
+- Stop using complex SVG paths that look inaccurate. 
+- Create a 'Component Library' where fruits, animals, and vegetables are drawn using clean HTML 'divs' and Tailwind CSS (CSS Art). 
+- EXAMPLE: An Orange should be a perfect circle with a textured CSS gradient, a small brown stem div, and a green leaf div. 
+- Ensure these look "Professional and Minimalist" rather than "Hand-drawn and Messy."
+
+### 3. MASSIVE CONTENT EXPANSION
+- GENERATE FULL PAGES for each category:
+    - /category/fruits: List 50+ fruits with names.
+    - /category/animals: List 60+ animals.
+    - /category/alphabet: Full A-Z tracing sheets.
+- MASTER SHEETS: Create specific pages for "All Fruits on One Page" and "A-Z on One Page" using a tight HTML grid optimized for A4 printing.
+
+### 4. NEW PAGES & FOOTER
+- Add these actual pages with content: /about, /contact, /privacy-policy, /disclaimer, /terms.
+- Add a "Request a Printable" page with a professional contact form.
+- The footer must be a 4-column mega-footer with all these links and social media icons.
+
+### 5. PRINT ENGINE
+- Ensure the 'Print' button on every item triggers a clean A4 print view. 
+- Use @media print to hide all UI elements, leaving only the HTML-drawn object and the traceable text.
+
+Execute this redesign now. Focus on professional "CSS Art" for the visuals to ensure they look accurate and clean.
