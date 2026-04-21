@@ -1292,36 +1292,24 @@ function lobsterSVG(): string {
 }
 
 function starfishSVG(): string {
+  const cx = 250, cy = 255, R = 175, r = 68;
+  const pts = Array.from({length:10}, (_,i) => {
+    const a = (i*36 - 90) * Math.PI/180;
+    const rad = i%2===0 ? R : r;
+    return `${(cx+rad*Math.cos(a)).toFixed(1)},${(cy+rad*Math.sin(a)).toFixed(1)}`;
+  }).join(' ');
+  const suckers = Array.from({length:5}, (_,i) =>
+    Array.from({length:4}, (_,j) => {
+      const a = (i*72 - 54 + j*9) * Math.PI/180;
+      const rad = 88 + j*22;
+      return `<circle cx="${(cx+rad*Math.cos(a)).toFixed(1)}" cy="${(cy+rad*Math.sin(a)).toFixed(1)}" r="5" fill="none" stroke="#1a1a1a" stroke-width="1.5"/>`;
+    }).join('')
+  ).join('');
   return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500" width="500" height="500">
   <rect width="500" height="500" fill="white" stroke="#1a1a1a" stroke-width="3"/>
-  ${Array.from({length:5}, (_,i) => {
-    const a1 = (i*72 - 90) * Math.PI/180;
-    const a2 = ((i*72+36) - 90) * Math.PI/180;
-    const r1=175, r2=65;
-    const x1=(250+r1*Math.cos(a1)).toFixed(0); const y1=(260+r1*Math.sin(a1)).toFixed(0);
-    const mx1=(250+r2*Math.cos(a2)).toFixed(0); const my1=(260+r2*Math.sin(a2)).toFixed(0);
-    const a3 = ((i*72+72) - 90) * Math.PI/180;
-    const x2=(250+r1*Math.cos(a3)).toFixed(0); const y2=(260+r1*Math.sin(a3)).toFixed(0);
-    const tipX=(250+r1*1.02*Math.cos(a1)).toFixed(0); const tipY=(260+r1*1.02*Math.sin(a1)).toFixed(0);
-    const cx1=(250+(r1*.6)*Math.cos(a1+0.3)).toFixed(0); const cy1=(260+(r1*.6)*Math.sin(a1+0.3)).toFixed(0);
-    const cx2=(250+(r1*.6)*Math.cos(a1-0.3)).toFixed(0); const cy2=(260+(r1*.6)*Math.sin(a1-0.3)).toFixed(0);
-    return `<path d="M${mx1} ${my1} Q${cx1} ${cy1} ${x1} ${y1} Q${cx2} ${cy2}" fill="none" stroke="#1a1a1a" stroke-width="4"/>`;
-  }).join('')}
-  <polygon points="${Array.from({length:10}, (_,i) => {
-    const a = (i*36 - 90) * Math.PI/180;
-    const r = i%2===0 ? 175 : 65;
-    return `${(250+r*Math.cos(a)).toFixed(0)},${(260+r*Math.sin(a)).toFixed(0)}`;
-  }).join(' ')}" fill="none" stroke="#1a1a1a" stroke-width="4"/>
-  <circle cx="250" cy="260" r="40" fill="none" stroke="#1a1a1a" stroke-width="3"/>
-  ${Array.from({length:5}, (_,i) => {
-    const a = i * 72 * Math.PI/180;
-    return Array.from({length:5}, (_,j) => {
-      const ra = (i*72 + j*12 + 15) * Math.PI/180;
-      const r = 90 + j*15;
-      const cx=(250+r*Math.cos(ra)).toFixed(0); const cy=(260+r*Math.sin(ra)).toFixed(0);
-      return `<circle cx="${cx}" cy="${cy}" r="5" fill="none" stroke="#1a1a1a" stroke-width="1.5"/>`;
-    }).join('');
-  }).join('')}
+  <polygon points="${pts}" fill="none" stroke="#1a1a1a" stroke-width="4.5"/>
+  <circle cx="${cx}" cy="${cy}" r="42" fill="none" stroke="#1a1a1a" stroke-width="3"/>
+  ${suckers}
   <text x="250" y="490" font-family="Arial, sans-serif" font-size="22" font-weight="600" text-anchor="middle" fill="#555">Starfish</text>
 </svg>`;
 }

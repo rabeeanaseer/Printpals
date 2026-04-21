@@ -1,4 +1,5 @@
 import { ExtraLibrary } from './content-library-extra';
+import { V3Library } from './content-library-v3';
 
 export type Category =
   | "alphabet"
@@ -1769,11 +1770,12 @@ export const CATEGORY_META: Record<Category, { label: string; color: string; des
   shapes: { label: 'Shapes', color: '#E8D5F5', description: 'Basic geometric shapes to color', icon: '⬡' },
   animals: { label: 'Animals', color: '#D5F5E3', description: '60+ wild & domestic animal coloring pages', icon: '🦁' },
   fruits: { label: 'Fruits', color: '#FDE8C8', description: '40+ colorful fruit illustrations', icon: '🍎' },
-  vegetables: { label: 'Vegetables', color: '#D5EAD9', description: 'Vegetable coloring worksheets', icon: '🥦' },
+  vegetables: { label: 'Vegetables', color: '#D5EAD9', description: '20+ vegetable coloring worksheets', icon: '🥦' },
   anatomy: { label: 'Anatomy', color: '#F9DDDD', description: 'Basic human anatomy outlines', icon: '🫀' },
   planners: { label: 'Planners', color: '#E0E8FF', description: 'Daily, weekly & budget planners', icon: '📅' },
   master: { label: 'Master Sheets', color: '#FFF3CD', description: 'Mega reference & compilation sheets', icon: '📋' },
 };
 
-// ---- Merge Extra Library ----
+// ---- Merge Libraries ----
 ContentLibrary.push(...ExtraLibrary);
+ContentLibrary.push(...V3Library);

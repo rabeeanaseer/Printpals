@@ -1,0 +1,27 @@
+The current drawings look like messy scribbles and are not professional. We need a complete visual overhaul for all printable assets. Do NOT use messy SVG paths. 
+
+### 1. REPLACE SCRIBBLES WITH CLEAN ASSETS
+- For ANIMALS, FRUITS, and VEGETABLES: If you cannot code a realistic SVG, use high-resolution Lucide-React icons or FontAwesome icons scaled to 400px. These must be clean, bold, black-and-white outlines perfect for coloring.
+- For ANATOMY: Use clean, professional geometric HTML shapes to represent organs (e.g., a perfect heart shape, a clean lung pair) rather than hand-drawn lines.
+
+### 2. NEW MASTER TRACING SHEETS
+- Create a new "Master Tracing" category.
+- Build "The Ultimate Alphabet Trace": A single A4 page with all 26 letters (A-Z) in a professional 'Dashed/Dotted' font for kids to trace.
+- Build "Number Master": Numbers 1-50 on one page with tracing dots.
+- Build "Shape Master": 12 geometric shapes (Circle, Square, etc.) on one page with names below them.
+
+### 3. HOMEPAGE & NAVIGATION UPGRADE
+- REDESIGN the Homepage: Instead of a grid of all items, show 6-8 massive, beautiful Category Cards (e.g., "Kids Learning," "Adult Planners," "Holiday Fun").
+- ADD STATS: Add a "Social Proof" bar on the homepage: "1.2 Million Downloads" | "Free Forever" | "50,000+ Happy Parents."
+- MEGA-MENU: Ensure the 'Categories' dropdown in the header is fully populated with all categories and sub-categories.
+
+### 4. EXPAND CONTENT VOLUME
+- Add 50+ MORE items to the 'Fruits', 'Vegetables', and 'Animals' sections.
+- Create 10 new 'Master Sheets' where multiple items (like 12 different fruits) are on a single page.
+- Ensure every single item has a functional 'Download' and 'Print' button that works perfectly.
+
+### 5. PROFESSIONAL FOOTER & PAGES
+- Ensure the footer has 4 columns: About, Legal (Privacy/Terms/Disclaimer), Categories, and Newsletter.
+- The Legal pages must have actual professional text, not placeholders.
+
+Fix the visual quality of the assets NOW. They must be clean, bold, and look like professional coloring book outlines.
