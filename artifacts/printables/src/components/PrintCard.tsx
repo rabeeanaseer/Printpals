@@ -1,7 +1,9 @@
+import { useState } from "react";
 import { Link } from "wouter";
 import { Printer, Download } from "lucide-react";
 import type { PrintItem, Category } from "@/lib/content-library";
 import { CATEGORY_META } from "@/lib/content-library";
+import { getPhotoUrl } from "@/lib/photo-map";
 
 interface PrintCardProps {
   item: PrintItem;
@@ -10,12 +12,14 @@ interface PrintCardProps {
 
 export default function PrintCard({ item, base }: PrintCardProps) {
   const meta = CATEGORY_META[item.category as Category];
+  const photoUrl = getPhotoUrl(item.id, item.category, item.title);
+  const [imgError, setImgError] = useState(false);
+  const showPhoto = !!photoUrl && !imgError;
 
   function handleDownload(e: React.MouseEvent) {
     e.preventDefault();
     e.stopPropagation();
-    const svgContent = item.svgContent;
-    const blob = new Blob([svgContent], { type: 'image/svg+xml' });
+    const blob = new Blob([item.svgContent], { type: 'image/svg+xml' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
@@ -51,30 +55,66 @@ export default function PrintCard({ item, base }: PrintCardProps) {
             (e.currentTarget as HTMLDivElement).style.transform = '';
           }}
         >
-          {/* SVG Preview */}
+          {/* Thumbnail — real photo for animals/fruits/vegs, SVG for others */}
           <div
             style={{
+              position: 'relative',
+              height: 152,
+              overflow: 'hidden',
+              background: showPhoto ? '#f0f0f0' : '#fafafa',
+              borderBottom: '1.5px solid #f3f4f6',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              background: '#fafafa',
-              borderBottom: '1.5px solid #f3f4f6',
-              height: 152,
-              overflow: 'hidden',
-              padding: 8,
-              position: 'relative',
             }}
           >
-            <div
-              style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '100%', height: '100%' }}
-              dangerouslySetInnerHTML={{ __html: scaledSvg(item.svgContent) }}
-            />
+            {showPhoto ? (
+              <>
+                <img
+                  src={photoUrl!}
+                  alt={item.title}
+                  loading="lazy"
+                  onError={() => setImgError(true)}
+                  style={{
+                    width: '100%',
+                    height: '100%',
+                    objectFit: 'cover',
+                    objectPosition: 'center',
+                    display: 'block',
+                    transition: 'transform 0.3s ease',
+                  }}
+                />
+                {/* "Coloring Sheet" badge overlay */}
+                <div style={{
+                  position: 'absolute',
+                  bottom: 6,
+                  right: 6,
+                  background: 'rgba(0,0,0,0.55)',
+                  backdropFilter: 'blur(4px)',
+                  borderRadius: 6,
+                  padding: '3px 7px',
+                  fontSize: '0.63rem',
+                  fontWeight: 700,
+                  color: 'white',
+                  letterSpacing: '0.03em',
+                  textTransform: 'uppercase',
+                }}>
+                  🖨️ Print &amp; Color
+                </div>
+              </>
+            ) : (
+              <div
+                style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '100%', height: '100%', padding: 8 }}
+                dangerouslySetInnerHTML={{ __html: scaledSvg(item.svgContent) }}
+              />
+            )}
+
             {/* Hover overlay */}
             <div
               className="card-hover-overlay"
               style={{
                 position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center',
-                background: 'rgba(124,58,237,0.08)', opacity: 0, transition: 'opacity 0.18s',
+                background: 'rgba(124,58,237,0.12)', opacity: 0, transition: 'opacity 0.18s',
               }}
             >
               <div style={{ background: 'white', borderRadius: '50%', padding: 8, boxShadow: '0 2px 8px rgba(0,0,0,0.15)' }}>
@@ -115,7 +155,7 @@ export default function PrintCard({ item, base }: PrintCardProps) {
       <div style={{ display: 'flex', gap: 6, marginTop: 6 }}>
         <button
           onClick={handleDownload}
-          title="Download SVG"
+          title="Download SVG coloring sheet"
           style={{
             flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 5,
             padding: '7px 0', borderRadius: 10, border: '1.5px solid #e5e7eb',
