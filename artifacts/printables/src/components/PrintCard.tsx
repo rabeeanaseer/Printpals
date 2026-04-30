@@ -1,9 +1,7 @@
-import { useState } from "react";
 import { Link } from "wouter";
 import { Printer, Download } from "lucide-react";
 import type { PrintItem, Category } from "@/lib/content-library";
 import { CATEGORY_META } from "@/lib/content-library";
-import { getPhotoUrl } from "@/lib/photo-map";
 
 interface PrintCardProps {
   item: PrintItem;
@@ -12,9 +10,6 @@ interface PrintCardProps {
 
 export default function PrintCard({ item, base }: PrintCardProps) {
   const meta = CATEGORY_META[item.category as Category];
-  const photoUrl = getPhotoUrl(item.id, item.category, item.title);
-  const [imgError, setImgError] = useState(false);
-  const showPhoto = !!photoUrl && !imgError;
 
   function handleDownload(e: React.MouseEvent) {
     e.preventDefault();
@@ -55,49 +50,38 @@ export default function PrintCard({ item, base }: PrintCardProps) {
             (e.currentTarget as HTMLDivElement).style.transform = '';
           }}
         >
-          {/* Thumbnail — coloring-book icon for animals/fruits/vegs, SVG for others */}
+          {/* Thumbnail — shows the actual SVG coloring illustration */}
           <div
             style={{
               position: 'relative',
-              height: 152,
+              height: 160,
               overflow: 'hidden',
-              background: showPhoto ? 'white' : '#fafafa',
+              background: '#fafafa',
               borderBottom: '1.5px solid #f3f4f6',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
             }}
           >
-            {showPhoto ? (
-              <>
-                <img
-                  src={photoUrl!}
-                  alt={item.title}
-                  loading="lazy"
-                  onError={() => setImgError(true)}
-                  style={{
-                    width: 118,
-                    height: 118,
-                    objectFit: 'contain',
-                    display: 'block',
-                    transition: 'transform 0.25s ease',
-                    filter: 'drop-shadow(0 2px 6px rgba(0,0,0,0.08))',
-                  }}
-                />
-              </>
-            ) : (
-              <div
-                style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '100%', height: '100%', padding: 8 }}
-                dangerouslySetInnerHTML={{ __html: scaledSvg(item.svgContent) }}
-              />
-            )}
+            <div
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                width: '100%',
+                height: '100%',
+                padding: 6,
+              }}
+              dangerouslySetInnerHTML={{ __html: scaledSvg(item.svgContent) }}
+            />
 
             {/* Hover overlay */}
             <div
               className="card-hover-overlay"
               style={{
-                position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center',
-                background: 'rgba(124,58,237,0.12)', opacity: 0, transition: 'opacity 0.18s',
+                position: 'absolute', inset: 0,
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                background: 'rgba(124,58,237,0.10)', opacity: 0, transition: 'opacity 0.18s',
               }}
             >
               <div style={{ background: 'white', borderRadius: '50%', padding: 8, boxShadow: '0 2px 8px rgba(0,0,0,0.15)' }}>
@@ -182,7 +166,7 @@ export default function PrintCard({ item, base }: PrintCardProps) {
 
 function scaledSvg(svg: string): string {
   return svg
-    .replace(/width="[\d]+"/, 'width="136"')
-    .replace(/height="[\d]+"/, 'height="136"')
-    .replace(/<svg /, '<svg style="max-width:100%;height:136px;" ');
+    .replace(/width="[\d]+"/, 'width="148"')
+    .replace(/height="[\d]+"/, 'height="148"')
+    .replace(/<svg /, '<svg style="max-width:100%;height:148px;" ');
 }
