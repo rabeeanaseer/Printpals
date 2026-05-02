@@ -50,29 +50,23 @@ Instead of burying educational resources behind ads, accounts, or bloated downlo
 
 ### Homepage
 
-![PrintPals Homepage](./screenshots/homepage.png)
+![PrintPals Homepage]<img width="1366" height="768" alt="image" src="https://github.com/user-attachments/assets/3a349314-0828-4870-9338-5bb53c762458" />
+
 
 ### Categories
 
-![PrintPals Categories](./screenshots/categories.png)
+![PrintPals Categories]<img width="1366" height="768" alt="image" src="https://github.com/user-attachments/assets/bd3798e7-27da-4030-b58e-f2c52d3d943e" />
+
 
 ### Featured Printables
 
-![PrintPals Featured Printables](./screenshots/featured-printables.png)
+![PrintPals Featured Printables]<img width="1366" height="768" alt="image" src="https://github.com/user-attachments/assets/349daec7-6c8d-4857-a5d0-dc773bf411fc" />
+
 
 ### Worksheet Preview
 
-![PrintPals Worksheet Preview](./screenshots/worksheet-preview.png)
+![PrintPals Worksheet Preview]<img width="1366" height="768" alt="image" src="https://github.com/user-attachments/assets/a72ed723-b253-4a11-9ad7-eaba5d504859" />
 
-### Recommended screenshots folder structure
-
-```bash
-screenshots/
-├── homepage.png
-├── categories.png
-├── featured-printables.png
-└── worksheet-preview.png
-```
 
 ## Why PrintPals
 
