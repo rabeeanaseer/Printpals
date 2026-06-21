@@ -1,3 +1,5 @@
+improvedigital.com, 1602_131723, DIRECT
+improvedigital.com, 1033_131723, DIRECT
 OWNERDOMAIN=printplues.com
 MANAGERDOMAIN=themoneytizer.com
 themoneytizer.com,131723,DIRECT
