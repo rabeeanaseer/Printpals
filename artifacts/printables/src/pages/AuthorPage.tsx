@@ -72,7 +72,9 @@ const LINKS = [
   { label: "GitHub", url: "https://github.com/rabeeanaseer6-lab", icon: <Github size={20} />, display: "rabeeanaseer6-lab", accent: "#1a1a2e", bg: "#f0f0f5" },
   { label: "LinkedIn", url: "https://www.linkedin.com/in/rabeea-naseer-045b4a337/", icon: <Linkedin size={20} />, display: "rabeea-naseer-045b4a337", accent: "#0077b5", bg: "#e8f4fd" },
 ];
-
+<div data-pubvibe-size="300x600"></div>
+<div data-pubvibe-size="300x250"></div>
+            <div data-pubvibe-size="728x90"></div>
 const BIO = [
   "Rabeea Naseer is an AI & data-driven systems developer and the founder of NovatraTech, focused on building scalable SaaS products, automated web infrastructures, and data-intelligent, revenue-generating digital ecosystems.",
   "She has independently developed and managed 25+ niche web assets, combining full-stack engineering with SEO architecture, data analytics, and user behavior modeling to transform websites into automated, performance-driven systems rather than static builds.",
@@ -80,7 +82,9 @@ const BIO = [
   "She actively develops and publishes projects on GitHub and Kaggle, focusing on applied analytics, predictive systems, and automation frameworks.",
   "Her long-term focus is on engineering intelligent, self-optimizing digital ecosystems, where AI and data continuously enhance performance, scalability, and real-world impact.",
 ];
-
+<div data-pubvibe-size="300x600"></div>
+<div data-pubvibe-size="300x250"></div>
+            <div data-pubvibe-size="728x90"></div>
 // ─── Component ────────────────────────────────────────────────────────────────
 export default function AuthorPage() {
   const base = import.meta.env.BASE_URL.replace(/\/$/, "");
@@ -111,7 +115,9 @@ export default function AuthorPage() {
   const projects = useCountUp(40, 2000, statsReveal.visible);
   const years = useCountUp(5, 1400, statsReveal.visible);
   const platforms = useCountUp(3, 1200, statsReveal.visible);
-
+<div data-pubvibe-size="300x600"></div>
+<div data-pubvibe-size="300x250"></div>
+            <div data-pubvibe-size="728x90"></div>
   // Section reveals
   const bioReveal = useReveal();
   const expertiseReveal = useReveal();
@@ -191,7 +197,9 @@ export default function AuthorPage() {
         .author-link-card { transition: transform 0.22s, box-shadow 0.22s, border-color 0.22s; }
         .author-link-card:hover { transform: translateY(-4px); }
       `}</style>
-
+<div data-pubvibe-size="300x600"></div>
+<div data-pubvibe-size="300x250"></div>
+            <div data-pubvibe-size="728x90"></div>
       <PageHeader />
 
       <main style={{ flex: 1, width: "100%", boxSizing: "border-box" }}>
@@ -240,7 +248,9 @@ export default function AuthorPage() {
               animation:"floatC 12s linear infinite",
             }} />
           </div>
-
+<div data-pubvibe-size="300x600"></div>
+<div data-pubvibe-size="300x250"></div>
+            <div data-pubvibe-size="728x90"></div>
           <div style={{ position:"relative", zIndex:1 }}>
             <h1 style={{ fontSize:"2.8rem", fontWeight:900, color:"white", margin:"0 0 14px", letterSpacing:"-0.5px", animation:"fadeUp 0.7s ease both" }}>
               Rabeea Naseer
@@ -261,7 +271,9 @@ export default function AuthorPage() {
             <p style={{ fontSize:"0.95rem", color:"rgba(255,255,255,0.6)", margin:"0 auto 36px", maxWidth:500, lineHeight:1.6, animation:"fadeUp 0.9s ease 0.2s both" }}>
               Founder @ <span style={{ color:"#c4b5fd", fontWeight:700 }}>NovatraTech</span> · Building Scalable SaaS, Automation & Data-Intelligent Web Systems
             </p>
-
+<div data-pubvibe-size="300x600"></div>
+<div data-pubvibe-size="300x250"></div>
+            <div data-pubvibe-size="728x90"></div>
             {/* Social buttons */}
             <div style={{ display:"flex", gap:12, justifyContent:"center", flexWrap:"wrap", animation:"fadeUp 1s ease 0.4s both" }}>
               {LINKS.map(link => (
@@ -331,7 +343,9 @@ export default function AuthorPage() {
             ))}
           </div>
         </div>
-
+<div data-pubvibe-size="300x600"></div>
+<div data-pubvibe-size="300x250"></div>
+            <div data-pubvibe-size="728x90"></div>
         <div style={{ maxWidth:900, margin:"0 auto", padding:"56px 24px 72px" }}>
 
           {/* ── BIO ─────────────────────────────────────────────────────────── */}
@@ -357,7 +371,9 @@ export default function AuthorPage() {
               </p>
             ))}
           </div>
-
+<div data-pubvibe-size="300x600"></div>
+<div data-pubvibe-size="300x250"></div>
+            <div data-pubvibe-size="728x90"></div>
           {/* ── EXPERTISE TAGS ──────────────────────────────────────────────── */}
           <div ref={expertiseReveal.ref} style={{
             background:"white", borderRadius:24, border:"1.5px solid #ede9fe",
@@ -385,7 +401,9 @@ export default function AuthorPage() {
               ))}
             </div>
           </div>
-
+<div data-pubvibe-size="300x600"></div>
+<div data-pubvibe-size="300x250"></div>
+            <div data-pubvibe-size="728x90"></div>
           {/* ── TIMELINE ────────────────────────────────────────────────────── */}
           <div ref={timelineReveal.ref} style={{
             background:"white", borderRadius:24, border:"1.5px solid #ede9fe",
@@ -441,7 +459,9 @@ export default function AuthorPage() {
               </div>
             </div>
           </div>
-
+<div data-pubvibe-size="300x600"></div>
+<div data-pubvibe-size="300x250"></div>
+            <div data-pubvibe-size="728x90"></div>
           {/* ── CONNECT LINKS ───────────────────────────────────────────────── */}
           <div ref={linksReveal.ref} style={{
             background:"white", borderRadius:24, border:"1.5px solid #ede9fe",
@@ -518,7 +538,9 @@ export default function AuthorPage() {
               </Link>
             </div>
           </div>
-
+<div data-pubvibe-size="300x600"></div>
+<div data-pubvibe-size="300x250"></div>
+            <div data-pubvibe-size="728x90"></div>
         </div>
       </main>
 
