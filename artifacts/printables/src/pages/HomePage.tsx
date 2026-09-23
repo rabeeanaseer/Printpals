@@ -89,6 +89,9 @@ export default function HomePage() {
             <button onClick={() => setSearch("")} style={{ padding: '6px 14px', background: '#f3f0ff', color: '#7c3aed', border: 'none', borderRadius: 8, fontWeight: 700, cursor: 'pointer', fontSize: '0.84rem' }}>
               ✕ Clear
             </button>
+            <div data-pubvibe-size="300x600"></div>
+<div data-pubvibe-size="300x250"></div>
+            <div data-pubvibe-size="728x90"></div>
           </div>
           {searchResults.length === 0 ? (
             <div style={{ textAlign: 'center', padding: '80px 20px' }}>
@@ -235,7 +238,9 @@ export default function HomePage() {
               ))}
             </div>
           </div>
-
+<div data-pubvibe-size="300x600"></div>
+<div data-pubvibe-size="300x250"></div>
+            <div data-pubvibe-size="728x90"></div>
           {/* ══ FEATURED PRINTABLES TEASER ══ */}
           <section style={{ maxWidth: 1280, margin: '0 auto', padding: '52px 20px 40px', width: '100%', boxSizing: 'border-box' }}>
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 24, flexWrap: 'wrap', gap: 12 }}>
@@ -294,6 +299,9 @@ export default function HomePage() {
               </div>
             </div>
           </section>
+          <div data-pubvibe-size="300x600"></div>
+<div data-pubvibe-size="300x250"></div>
+            <div data-pubvibe-size="728x90"></div>
         </>
       )}
 
