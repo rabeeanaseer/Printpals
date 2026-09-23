@@ -11,7 +11,7 @@ export default function AboutPage() {
   return (
     <div style={{ minHeight: '100vh', background: '#f8f7ff', display: 'flex', flexDirection: 'column' }}>
       <PageHeader />
-
+<div data-pubvibe-size="300x600"></div>
       <main style={{ maxWidth: 800, margin: '0 auto', padding: '48px 20px', flex: 1, width: '100%', boxSizing: 'border-box' }}>
         <div style={{ textAlign: 'center', marginBottom: 48 }}>
           <div style={{ fontSize: '3rem', marginBottom: 16 }}>🖨️</div>
@@ -82,7 +82,7 @@ Questions? Suggestions? We'd love to hear from you — your feedback helps us ad
             ))}
           </div>
         ))}
-
+<div data-pubvibe-size="728x90"></div>
         <div style={{ textAlign: 'center', marginTop: 40 }}>
           <Link
             href={base + "/"}
@@ -93,6 +93,7 @@ Questions? Suggestions? We'd love to hear from you — your feedback helps us ad
         </div>
       </main>
       <PageFooter />
+      <div data-pubvibe-size="300x250"></div>
     </div>
   );
 }
