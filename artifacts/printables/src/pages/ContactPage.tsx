@@ -38,6 +38,9 @@ export default function ContactPage() {
     <div style={{ minHeight: '100vh', background: '#f8f7ff', fontFamily: "'Inter','Segoe UI',sans-serif", display: 'flex', flexDirection: 'column' }}>
       <PageHeader />
 
+      {/* Ad 1 — Leaderboard */}
+      <div data-pubvibe-size="728x90"></div>
+
       <div style={{ background: 'linear-gradient(135deg,#f3f0ff,#fdf4ff)', borderBottom: '1.5px solid #ede9fe', padding: '40px 20px 32px', textAlign: 'center' }}>
         <div style={{ fontSize: '2.6rem', marginBottom: 10 }}>💬</div>
         <h1 style={{ fontWeight: 900, fontSize: 'clamp(1.6rem,4vw,2.4rem)', color: '#1a1a2e', margin: '0 0 10px' }}>Get in Touch</h1>
@@ -45,6 +48,9 @@ export default function ContactPage() {
           Have a question, found a bug, or want to suggest a new printable? We'd love to hear from you!
         </p>
       </div>
+
+      {/* Ad 2 — Medium Rectangle */}
+      <div data-pubvibe-size="300x250"></div>
 
       <main style={{ maxWidth: 1000, margin: '0 auto', padding: '44px 20px 60px', width: '100%', boxSizing: 'border-box', flex: 1 }}>
 
@@ -102,6 +108,9 @@ export default function ContactPage() {
               </form>
             )}
           </div>
+
+          {/* Ad 3 — Medium Rectangle */}
+          <div data-pubvibe-size="300x250"></div>
 
           {/* Request a Printable */}
           <div id="request" style={sectionCard}>
@@ -176,6 +185,9 @@ export default function ContactPage() {
           </div>
         </div>
 
+        {/* Ad 4 — Leaderboard */}
+        <div data-pubvibe-size="728x90"></div>
+
         <div style={{ marginTop: 32, background: 'white', borderRadius: 16, padding: '24px 28px', border: '1.5px solid #e5e7eb' }}>
           <h3 style={{ fontWeight: 800, color: '#1a1a2e', fontSize: '1rem', marginBottom: 14 }}>📮 Other Ways to Reach Us</h3>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill,minmax(200px,1fr))', gap: 16 }}>
@@ -194,7 +206,14 @@ export default function ContactPage() {
             ))}
           </div>
         </div>
+
+        {/* Ad 5 — Medium Rectangle */}
+        <div data-pubvibe-size="300x250"></div>
+
       </main>
+
+      {/* Ad 6 — Large Banner */}
+      <div data-pubvibe-size="300x600"></div>
 
       <PageFooter />
     </div>
