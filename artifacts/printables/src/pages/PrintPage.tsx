@@ -35,6 +35,10 @@ export default function PrintPage() {
 
   return (
     <div className="min-h-screen bg-gray-50">
+
+      {/* Ad 1 — Leaderboard */}
+      <div className="no-print" data-pubvibe-size="728x90"></div>
+
       {/* Nav bar — hidden in print */}
       <header className="no-print bg-white border-b-2 border-gray-100 sticky top-0 z-50 shadow-sm">
         <div className="max-w-4xl mx-auto px-4 py-3 flex items-center justify-between gap-4">
@@ -45,7 +49,9 @@ export default function PrintPage() {
                 <span className="hidden sm:inline">Back to Library</span>
               </button>
             </Link>
+
             <span className="text-gray-300">|</span>
+
             <Link href={base + "/"}>
               <button className="text-purple-600 hover:text-purple-800">
                 <Home className="w-4 h-4" />
@@ -73,8 +79,12 @@ export default function PrintPage() {
         </div>
       </header>
 
+      {/* Ad 2 — Medium Rectangle */}
+      <div className="no-print" data-pubvibe-size="300x250"></div>
+
       {/* Print page area */}
       <div className="print-page max-w-2xl mx-auto px-6 py-10">
+
         {/* Title on print sheet */}
         <div className="no-print mb-4 text-center">
           <h2 className="text-2xl font-extrabold text-gray-900">{item.title}</h2>
@@ -82,16 +92,27 @@ export default function PrintPage() {
           <p className="text-gray-400 text-sm mt-1">{item.description}</p>
         </div>
 
+        {/* Ad 3 — Leaderboard */}
+        <div className="no-print" data-pubvibe-size="728x90"></div>
+
         {/* SVG — the printable content */}
         <div
           className="w-full flex justify-center"
-          style={{ border: "3px solid #1a1a1a", borderRadius: 12, background: "white", overflow: "hidden" }}
+          style={{
+            border: "3px solid #1a1a1a",
+            borderRadius: 12,
+            background: "white",
+            overflow: "hidden"
+          }}
         >
           <div
             className="w-full"
             dangerouslySetInnerHTML={{ __html: fullSvg(item.svgContent) }}
           />
         </div>
+
+        {/* Ad 4 — Medium Rectangle */}
+        <div className="no-print" data-pubvibe-size="300x250"></div>
 
         {/* Trace & Learn Section */}
         <div
@@ -115,6 +136,7 @@ export default function PrintPage() {
                 right: 0,
               }}
             />
+
             <span
               className="trace-text relative z-10 inline-block px-4 bg-white"
               aria-label={`Trace the word: ${item.traceText}`}
@@ -138,12 +160,22 @@ export default function PrintPage() {
             Trace the dashed word above, then write it yourself on the lines below.
           </p>
         </div>
+
+        {/* Ad 5 — Leaderboard */}
+        <div className="no-print mt-6" data-pubvibe-size="728x90"></div>
+
       </div>
+
+      {/* Ad 6 — Medium Rectangle */}
+      <div className="no-print" data-pubvibe-size="300x250"></div>
 
       {/* Related printables — hidden in print */}
       {related.length > 0 && (
         <div className="no-print max-w-2xl mx-auto px-6 pb-12">
-          <h3 className="font-bold text-gray-700 text-base mb-4 mt-2">More {meta.label}</h3>
+          <h3 className="font-bold text-gray-700 text-base mb-4 mt-2">
+            More {meta.label}
+          </h3>
+
           <div className="flex flex-wrap gap-3">
             {related.map(rel => (
               <Link key={rel.id} href={`${base}/print/${rel.id}`}>
@@ -163,6 +195,9 @@ export default function PrintPage() {
           </div>
         </div>
       )}
+
+      {/* Ad 7 — Large Rectangle */}
+      <div className="no-print" data-pubvibe-size="300x600"></div>
     </div>
   );
 }
