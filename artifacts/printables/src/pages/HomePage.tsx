@@ -79,18 +79,29 @@ export default function HomePage() {
     <div style={{ minHeight: '100vh', background: '#f8f7ff', fontFamily: "'Inter','Segoe UI',sans-serif", display: 'flex', flexDirection: 'column' }}>
       <PageHeader searchValue={search} onSearch={handleSearch} />
 
+      {/* Ad 1 — Leaderboard */}
+      <div data-pubvibe-size="728x90"></div>
+
       {isSearching ? (
         <main style={{ maxWidth: 1280, margin: '0 auto', padding: '28px 16px 60px', flex: 1, width: '100%', boxSizing: 'border-box' }}>
+
+          {/* Ad 2 — Medium Rectangle */}
+          <div data-pubvibe-size="300x250"></div>
+
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 20 }}>
             <h2 style={{ fontWeight: 800, color: '#1a1a2e', fontSize: '1.1rem', margin: 0 }}>
               Search results for "<span style={{ color: '#7c3aed' }}>{search}</span>"
               <span style={{ marginLeft: 8, fontWeight: 400, color: '#9ca3af', fontSize: '0.9rem' }}>({searchResults.length} sheets)</span>
             </h2>
+
             <button onClick={() => setSearch("")} style={{ padding: '6px 14px', background: '#f3f0ff', color: '#7c3aed', border: 'none', borderRadius: 8, fontWeight: 700, cursor: 'pointer', fontSize: '0.84rem' }}>
               ✕ Clear
             </button>
-          
           </div>
+
+          {/* Ad 3 — Leaderboard */}
+          <div data-pubvibe-size="728x90"></div>
+
           {searchResults.length === 0 ? (
             <div style={{ textAlign: 'center', padding: '80px 20px' }}>
               <div style={{ fontSize: '3.5rem', marginBottom: 14 }}>🔍</div>
@@ -101,9 +112,14 @@ export default function HomePage() {
               </button>
             </div>
           ) : (
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill,minmax(175px,1fr))', gap: '1rem' }}>
-              {searchResults.map(item => <PrintCard key={item.id} item={item} base={base} />)}
-            </div>
+            <>
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill,minmax(175px,1fr))', gap: '1rem' }}>
+                {searchResults.map(item => <PrintCard key={item.id} item={item} base={base} />)}
+              </div>
+
+              {/* Ad 4 — Medium Rectangle */}
+              <div data-pubvibe-size="300x250"></div>
+            </>
           )}
         </main>
       ) : (
@@ -114,10 +130,12 @@ export default function HomePage() {
               <div style={{ display: 'inline-flex', alignItems: 'center', gap: 7, background: '#7c3aed', color: 'white', padding: '5px 16px', borderRadius: 999, fontSize: '0.76rem', fontWeight: 700, letterSpacing: '0.06em', textTransform: 'uppercase', marginBottom: 22 }}>
                 <Star style={{ width: 11, height: 11 }} /> Free Forever · No Login · No Ads
               </div>
+
               <h1 style={{ fontSize: 'clamp(1.9rem,5vw,3.2rem)', fontWeight: 900, color: '#1a1a2e', lineHeight: 1.12, margin: '0 0 14px' }}>
                 {total}+ Free Printable Worksheets<br />
                 <span style={{ background: 'linear-gradient(135deg,#7c3aed,#a855f7)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>for Kids &amp; Educators</span>
               </h1>
+
               <p style={{ color: '#6b7280', fontSize: '1.05rem', maxWidth: 580, margin: '0 auto 28px', lineHeight: 1.65 }}>
                 Coloring pages, alphabet tracing, number sheets, animal art, math references &amp; planners — all generated instantly as SVG. Print-ready, zero ads.
               </p>
@@ -144,12 +162,16 @@ export default function HomePage() {
                 <a href="#categories" style={{ display: 'inline-flex', alignItems: 'center', gap: 7, padding: '13px 28px', background: 'linear-gradient(135deg,#7c3aed,#a855f7)', color: 'white', textDecoration: 'none', borderRadius: 12, fontWeight: 800, fontSize: '0.95rem', boxShadow: '0 4px 16px rgba(124,58,237,0.32)' }}>
                   Browse Printables <ArrowRight style={{ width: 16, height: 16 }} />
                 </a>
+
                 <Link href={`${base}/contact#request`} style={{ display: 'inline-flex', alignItems: 'center', gap: 7, padding: '13px 28px', background: 'white', color: '#7c3aed', textDecoration: 'none', borderRadius: 12, fontWeight: 800, fontSize: '0.95rem', border: '2px solid #ede9fe' }}>
                   Request a Printable
                 </Link>
               </div>
             </div>
           </section>
+
+          {/* Ad 5 — Leaderboard */}
+          <div data-pubvibe-size="728x90"></div>
 
           {/* ══ CATEGORY CARDS ══ */}
           <section id="categories" style={{ maxWidth: 1280, margin: '0 auto', padding: '52px 20px 40px', width: '100%', boxSizing: 'border-box' }}>
@@ -166,6 +188,7 @@ export default function HomePage() {
               {ALL_CATS.map(cat => {
                 const meta = CATEGORY_META[cat];
                 const count = ContentLibrary.filter(i => i.category === cat).length;
+
                 return (
                   <div
                     key={cat}
@@ -195,13 +218,16 @@ export default function HomePage() {
                            cat === 'planners' ? 'Planners' :
                            'Master Sheets'}
                         </h3>
+
                         <span style={{ flexShrink: 0, background: meta.color, color: '#1a1a2e', fontWeight: 800, fontSize: '0.72rem', padding: '3px 9px', borderRadius: 999 }}>
                           {count}+ sheets
                         </span>
                       </div>
+
                       <p style={{ color: '#6b7280', fontSize: '0.84rem', lineHeight: 1.6, margin: '0 0 16px', flex: 1 }}>
                         {CAT_TAGLINES[cat]}
                       </p>
+
                       <Link
                         href={`${base}/category/${cat}`}
                         style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 7, padding: '10px 16px', background: `linear-gradient(135deg,${meta.color},${meta.color}cc)`, color: '#1a1a2e', textDecoration: 'none', borderRadius: 10, fontWeight: 800, fontSize: '0.86rem', transition: 'opacity 0.15s', border: `1.5px solid ${meta.color}` }}
@@ -216,6 +242,9 @@ export default function HomePage() {
               })}
             </div>
           </section>
+
+          {/* Ad 6 — Medium Rectangle */}
+          <div data-pubvibe-size="300x250"></div>
 
           {/* ══ TRUST STRIP ══ */}
           <div style={{ background: 'linear-gradient(135deg,#1a1a2e,#2d2d4e)', padding: '32px 20px' }}>
@@ -237,6 +266,9 @@ export default function HomePage() {
             </div>
           </div>
 
+          {/* Ad 7 — Leaderboard */}
+          <div data-pubvibe-size="728x90"></div>
+
           {/* ══ FEATURED PRINTABLES TEASER ══ */}
           <section style={{ maxWidth: 1280, margin: '0 auto', padding: '52px 20px 40px', width: '100%', boxSizing: 'border-box' }}>
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 24, flexWrap: 'wrap', gap: 12 }}>
@@ -244,14 +276,22 @@ export default function HomePage() {
                 <h2 style={{ fontWeight: 900, fontSize: 'clamp(1.3rem,3vw,1.9rem)', color: '#1a1a2e', margin: 0 }}>Featured Printables</h2>
                 <p style={{ color: '#6b7280', fontSize: '0.88rem', margin: '4px 0 0' }}>A taste of what's in our library</p>
               </div>
+
               <Link href={`${base}/category/alphabet`} style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '9px 18px', background: 'white', color: '#7c3aed', textDecoration: 'none', borderRadius: 10, fontWeight: 700, fontSize: '0.86rem', border: '2px solid #ede9fe' }}>
                 Browse All <ArrowRight style={{ width: 14, height: 14 }} />
               </Link>
             </div>
+
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill,minmax(175px,1fr))', gap: '1rem' }}>
               {ContentLibrary.slice(0, 12).map(item => <PrintCard key={item.id} item={item} base={base} />)}
             </div>
           </section>
+
+          {/* Ad 8 — Medium Rectangle */}
+          <div data-pubvibe-size="300x250"></div>
+
+          {/* Ad 9 — Leaderboard */}
+          <div data-pubvibe-size="728x90"></div>
 
           {/* ══ FAQ ACCORDION ══ */}
           <section style={{ background: 'linear-gradient(135deg,#f3f0ff,#fdf4ff)', borderTop: '1.5px solid #ede9fe', padding: '52px 20px 60px' }}>
@@ -278,6 +318,7 @@ export default function HomePage() {
                         {openFaq === i ? <ChevronUp style={{ width: 18, height: 18 }} /> : <ChevronDown style={{ width: 18, height: 18 }} />}
                       </span>
                     </button>
+
                     {openFaq === i && (
                       <div style={{ padding: '0 20px 20px' }}>
                         <p style={{ color: '#4b5563', fontSize: '0.9rem', lineHeight: 1.7, margin: 0 }}>{faq.a}</p>
@@ -295,6 +336,9 @@ export default function HomePage() {
               </div>
             </div>
           </section>
+
+          {/* Ad 10 — Large Banner */}
+          <div data-pubvibe-size="300x600"></div>
         </>
       )}
 
