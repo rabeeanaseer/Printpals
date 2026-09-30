@@ -11,6 +11,7 @@ export default function AboutPage() {
   return (
     <div style={{ minHeight: '100vh', background: '#f8f7ff', display: 'flex', flexDirection: 'column' }}>
       <PageHeader />
+      <div data-pubvibe-size="728x90"></div>
       <main style={{ maxWidth: 800, margin: '0 auto', padding: '48px 20px', flex: 1, width: '100%', boxSizing: 'border-box' }}>
         <div style={{ textAlign: 'center', marginBottom: 48 }}>
           <div style={{ fontSize: '3rem', marginBottom: 16 }}>🖨️</div>
@@ -31,6 +32,7 @@ export default function AboutPage() {
               <div style={{ display: 'flex', justifyContent: 'center', marginBottom: 10 }}>{stat.icon}</div>
               <div style={{ fontSize: '1.8rem', fontWeight: 900, color: '#1a1a2e', marginBottom: 4 }}>{stat.number}</div>
               <div style={{ fontSize: '0.85rem', color: '#6b7280', fontWeight: 600 }}>{stat.label}</div>
+              <div data-pubvibe-size="728x90"></div>
             </div>
           ))}
         </div>
@@ -66,7 +68,7 @@ Pro tip: Our master reference sheets (like the Fruit Alphabet and Animals Mega-G
             content: `All PrintPals worksheets are free for personal, educational, and classroom use. You may print unlimited copies for your students or children.
 
 We do not allow reselling or commercial redistribution of our worksheets. Please see our Terms of Service for full details.
-
+<div data-pubvibe-size="300x600"></div>
 Questions? Suggestions? We'd love to hear from you — your feedback helps us add even more worksheets to the library.`
           }
         ].map((section, i) => (
