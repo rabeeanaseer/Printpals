@@ -191,6 +191,8 @@ export default function AuthorPage() {
       `}</style>
       <PageHeader />
 
+      <div data-pubvibe-size="728x90"></div>
+
       <main style={{ flex: 1, width: "100%", boxSizing: "border-box" }}>
 
         {/* ── HERO ──────────────────────────────────────────────────────────── */}
@@ -280,6 +282,8 @@ export default function AuthorPage() {
           </div>
         </section>
 
+        <div data-pubvibe-size="300x600"></div>
+
         {/* ── SKILLS TICKER ─────────────────────────────────────────────────── */}
         <div style={{ background:"#1a1a2e", padding:"22px 0", overflow:"hidden" }}>
           {[{ skills: SKILLS_ROW1, dir: "tickerL", speed: "28s" }, { skills: SKILLS_ROW2, dir: "tickerR", speed: "22s" }].map((row, ri) => (
@@ -300,6 +304,8 @@ export default function AuthorPage() {
             </div>
           ))}
         </div>
+
+        <div data-pubvibe-size="728x90"></div>
 
         {/* ── STATS ─────────────────────────────────────────────────────────── */}
         <div ref={statsReveal.ref} style={{ background:"white", borderBottom:"1.5px solid #ede9fe" }}>
@@ -328,6 +334,8 @@ export default function AuthorPage() {
           </div>
         </div>
 
+        <div data-pubvibe-size="300x250"></div>
+
         <div style={{ maxWidth:900, margin:"0 auto", padding:"56px 24px 72px" }}>
 
           {/* ── BIO ─────────────────────────────────────────────────────────── */}
@@ -353,6 +361,8 @@ export default function AuthorPage() {
               </p>
             ))}
           </div>
+
+          <div data-pubvibe-size="728x90"></div>
 
           {/* ── EXPERTISE TAGS ──────────────────────────────────────────────── */}
           <div ref={expertiseReveal.ref} style={{
@@ -381,6 +391,8 @@ export default function AuthorPage() {
               ))}
             </div>
           </div>
+
+          <div data-pubvibe-size="300x600"></div>
 
           {/* ── TIMELINE ────────────────────────────────────────────────────── */}
           <div ref={timelineReveal.ref} style={{
@@ -438,6 +450,8 @@ export default function AuthorPage() {
             </div>
           </div>
 
+          <div data-pubvibe-size="300x250"></div>
+
           {/* ── CONNECT LINKS ───────────────────────────────────────────────── */}
           <div ref={linksReveal.ref} style={{
             background:"white", borderRadius:24, border:"1.5px solid #ede9fe",
@@ -483,6 +497,8 @@ export default function AuthorPage() {
             </div>
           </div>
 
+          <div data-pubvibe-size="728x90"></div>
+
           {/* ── QUOTE BANNER ────────────────────────────────────────────────── */}
           <div ref={quoteReveal.ref} style={{
             borderRadius:24, overflow:"hidden",
@@ -514,6 +530,8 @@ export default function AuthorPage() {
               </Link>
             </div>
           </div>
+
+          <div data-pubvibe-size="300x250"></div>
 
         </div>
       </main>
